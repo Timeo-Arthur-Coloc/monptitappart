@@ -1,5 +1,6 @@
 import { IsOptional } from "class-validator";
-import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { FlatshareEntity } from "./flatshare.entity";
 
 @Entity("users")
 export class UserEntity {
@@ -27,4 +28,10 @@ export class UserEntity {
   @Column({ nullable: true })
   @IsOptional()
   profilePicture: string;
+
+  @OneToMany(() => FlatshareEntity, (flatshare) => flatshare.roomates)
+  flatshares: FlatshareEntity[]
+
+  @OneToMany(() => FlatshareEntity, (flatshare) => flatshare.chief)
+  isChiefOf: FlatshareEntity[]
 }

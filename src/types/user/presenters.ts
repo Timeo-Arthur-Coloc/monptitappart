@@ -1,5 +1,5 @@
 import { Expose } from "class-transformer";
-import { IsDate, IsNumber, IsOptional, IsString } from "class-validator";
+import { IsNumber, IsOptional, IsString } from "class-validator";
 import { UserEntity } from "../../databases/mysql/user.entity";
 
 export class UserPresenter {

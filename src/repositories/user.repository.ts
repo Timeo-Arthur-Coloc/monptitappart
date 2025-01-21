@@ -1,8 +1,7 @@
 import { Repository } from "typeorm";
-import { UserEntity } from "../databases/mysql/user.entity";
 import { connectMySQLDB } from "../configs/databases/mysql.config";
-// import { UserToCreateDTO } from "../types/user/dtos";
-import { userToCreateInput } from "../types/user/Inputs";
+import { UserEntity } from "../databases/mysql/user.entity";
+import { userToCreateInput } from "../types/user/inputs";
 
 export class UserRepository {
   private userDB: Repository<UserEntity>;
