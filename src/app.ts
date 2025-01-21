@@ -36,7 +36,7 @@ const swaggerOptions = {
       },
     ],
   },
-  apis: ["./routes/**/*.ts"], // Chemins vers vos fichiers de routes pour les commentaires Swagger
+  apis: ["**/*.ts"], // Chemins vers vos fichiers de routes pour les commentaires Swagger
 };
 
 const swaggerDocs = swaggerJsDoc(swaggerOptions);
