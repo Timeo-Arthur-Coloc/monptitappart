@@ -21,4 +21,9 @@ export class FlatshareToCreateDTO {
     @IsArray()
     @Type(() => UserToCreateDTO)
     roomates: FlatshareEntity['roomates'];
+
+    @Expose()
+    @IsNumber()
+    @Type(() => UserToCreateDTO)
+    chief: FlatshareEntity['chief'];
 }

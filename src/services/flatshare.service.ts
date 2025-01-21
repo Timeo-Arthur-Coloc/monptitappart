@@ -11,7 +11,7 @@ export class FlatshareService {
   private flatshareRepository = new FlatshareRepository();
   private emailService = new EmailService();
 
-  async createFlashare(flatshareToCreate: FlatshareToCreateDTO): Promise<FlatshareEntity> {
+  async createFlatshare(flatshareToCreate: FlatshareToCreateDTO): Promise<FlatshareEntity> {
     // ON CRÉE LA COLLOC
     const createdFlatshare = this.flatshareRepository.create(flatshareToCreate);
 

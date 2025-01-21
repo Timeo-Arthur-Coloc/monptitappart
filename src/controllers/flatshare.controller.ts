@@ -11,13 +11,16 @@ export const createFlatshare = async (req: Request, res: Response, next: NextFun
     try {
         const flatshareToCreateDTO = plainToInstance(FlatshareToCreateDTO, req.body, { excludeExtraneousValues: true });
 
+        const userId = (req as any).decoded.userId; // Get the userId from the token
+        flatshareToCreateDTO.chief = userId; // Set the chief as the user who initiated the request
+
         const dtoErrors = await validate(flatshareToCreateDTO);
         if (dtoErrors.length > 0) {
             console.log(dtoErrors);
             throw new Error("Invalid fields");
         }
 
-        const flatshare = await flatshareService.createFlashare(req.body);
+        const flatshare = await flatshareService.createFlatshare(flatshareToCreateDTO);
         // appeler le logger service pour enregistrer QUI a créer une colloc (peut être un admin ou le chef lui même (?)  )
 
         const createdFlatshare = plainToInstance(FlatsharePresenter, flatshare, { excludeExtraneousValues: true });
