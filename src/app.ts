@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import helmet from "helmet";
 import userRoutes from "./routes/user/user.routes";
+import flatshareRoutes from "./routes/flatshare/flatshare.routes";
 import { AppError } from "./utils/error.utils";
 import dotenv from 'dotenv';
 import swaggerUi from "swagger-ui-express";
@@ -62,6 +63,8 @@ const swaggerDocs = swaggerJsDoc(swaggerOptions);
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
 app.use("/api/users", userRoutes); // Routes pour les utilisateurs
+
+app.use("/api/flatshares", flatshareRoutes); // Routes pour les collocs
 
 
 // Middleware de gestion des erreurs
