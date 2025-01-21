@@ -12,7 +12,7 @@ export class UserEntity {
   @Column({ length: 50 })
   lastname: string;
 
-  @Column()
+  @Column({ type: 'date' })
   birthdate: string;
 
   @Column({ unique: true })
