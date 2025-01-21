@@ -3,13 +3,19 @@ import cors from "cors";
 import helmet from "helmet";
 import userRoutes from "./routes/user/user.routes";
 import { AppError } from "./utils/error.utils";
+import * as jwt from 'jsonwebtoken';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 const app = express();
+
+const JWT_SECRET = process.env.JWT_SECRET;
 
 // Middlewares globaux
 app.use(express.json()); // Permet de lire le body en JSON
 app.use(cors());         // Active CORS pour les requêtes cross-origin
-// app.use(helmet());       // Sécurise les headers HTTP
+app.use(helmet());       // Sécurise les headers HTTP
 
 // Routes
 app.get("/", (req, res) => {

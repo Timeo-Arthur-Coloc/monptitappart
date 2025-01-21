@@ -26,3 +26,44 @@ export const registerUser = async (req: Request, res: Response, next: NextFuncti
     next(error);
   }
 };
+
+export const loginUser = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+  try {
+    const { email, password } = req.body;
+    const tokens = await userService.loginUser(email, password);
+    res.status(200).json(tokens);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const refreshAccessToken = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+  try {
+    const { refreshToken } = req.body;
+    const accessToken = await userService.refreshAccessToken(refreshToken);
+    res.status(200).json({ accessToken });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const getUserProfile = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+  try {
+    const userId = parseInt(req.params.id, 10); // Use userId from request params
+    const user = await userService.getUserProfile(userId);
+    const userProfile = plainToInstance(UserPresenter, user, { excludeExtraneousValues: true });
+    res.status(200).json(userProfile);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const deleteUser = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+  try {
+    const userId = parseInt(req.params.id, 10);
+    await userService.deleteUser(userId);
+    res.status(204).send();
+  } catch (error) {
+    next(error);
+  }
+};

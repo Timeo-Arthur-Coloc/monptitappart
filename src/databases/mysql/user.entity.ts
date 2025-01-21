@@ -1,3 +1,4 @@
+import { IsOptional } from "class-validator";
 import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
 
 @Entity("users")
@@ -22,4 +23,8 @@ export class UserEntity {
 
   @Column({ default: true })
   isActive: boolean;
+
+  @Column({ nullable: true })
+  @IsOptional()
+  profilePicture: string;
 }

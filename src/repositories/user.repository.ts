@@ -1,7 +1,7 @@
 import { Repository } from "typeorm";
 import { UserEntity } from "../databases/mysql/user.entity";
 import { connectMySQLDB } from "../configs/databases/mysql.config";
-import { UserToCreateDTO } from "../types/user/dtos";
+// import { UserToCreateDTO } from "../types/user/dtos";
 import { userToCreateInput } from "../types/user/Inputs";
 
 export class UserRepository {
@@ -22,5 +22,13 @@ export class UserRepository {
 
   findByEmail(email: string): Promise<UserEntity | null> {
     return this.userDB.findOne({ where: { email } });
+  }
+
+  findById(id: number): Promise<UserEntity | null> {
+    return this.userDB.findOne({ where: { id } });
+  }
+
+  async delete(id: number): Promise<void> {
+    await this.userDB.delete(id);
   }
 }
