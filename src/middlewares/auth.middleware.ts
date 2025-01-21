@@ -1,24 +1,32 @@
 import express, { Request, Response, NextFunction } from 'express';
+import { AppError } from '../utils/error.utils';
 import * as jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
 
 dotenv.config();
 
-const JWT_SECRET = process.env.JWT_SECRET;
+const accessToken = process.env.JWT_SECRET;
 
 export const authenticate = (req: Request, res: Response, next: NextFunction): void => {
   const authHeader = req.headers.authorization;
+
   if (!authHeader) {
-    res.status(401).json({ message: 'No token provided' });
+    throw new AppError(401, 'MISSING_AUTHORIZATION_HEADER', 'Authorization header is required');
     return;
   }
 
-  const token = authHeader.split(' ')[2];
+  const token = authHeader.split(' ')[1]; 
+
   try {
-    const decoded = jwt.verify(token, JWT_SECRET!) as { userId: number };
-    // req.userId = decoded.userId;
-    next();
+    jwt.verify(token, accessToken!, (err, decoded) => {
+      if (err) {
+        throw new AppError(401, 'INVALID_TOKEN', 'Invalid token');
+      }
+      console.log("DECODED", decoded);
+      (req as any).decoded = decoded;
+      next();
+    })
   } catch (error) {
-    res.status(401).json({ message: 'Invalid token' });
+    throw new AppError(401, 'INVALID_TOKEN', 'Invalid token');
   }
 };

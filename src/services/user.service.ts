@@ -40,7 +40,7 @@ export class UserService {
     const savedUser = await this.userRepository.save(createdUser);
 
     // APPELER LE EMAIL SERVICE POUR ENVOYER UNE NOTIFICATION DE CREATION DE COMPTE A L'UTILISATEUR NOUVELLEMENT CRÉÉ
-    await this.emailService.sendAccountCreationEmail(savedUser.email);
+    await this.emailService.sendAccountCreationEmail(savedUser.email, "Welcome to our platform!", "Your account has been successfully created");
 
     // ON RETOURNE L'UTILISATEUR CRÉÉ
     return savedUser;
@@ -60,7 +60,7 @@ export class UserService {
 
   async refreshAccessToken(refreshToken: string): Promise<string> {
     try {
-      const payload = jwt.verify(refreshToken, this.jwtSecret!) as { userId: number };
+      const payload = jwt.verify(refreshToken, this.jwtRefreshSecret!) as { userId: number };
       const accessToken = jwt.sign({ userId: payload.userId }, this.jwtRefreshSecret!, { expiresIn: '15m' });
       return accessToken;
     } catch (error) {

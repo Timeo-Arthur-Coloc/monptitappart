@@ -94,6 +94,16 @@
 
 /**
  * @swagger
+ * components:
+ *   securitySchemes:
+ *     bearerAuth:
+ *       type: http
+ *       scheme: bearer
+ *       bearerFormat: JWT
+ */
+
+/**
+ * @swagger
  * /api/users/me:
  *   get:
  *     summary: Get the profile of the authenticated user

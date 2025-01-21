@@ -49,7 +49,7 @@ export const refreshAccessToken = async (req: Request, res: Response, next: Next
 
 export const getUserProfile = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   try {
-    const userId = parseInt(req.params.id, 10); // Use userId from request params
+    const userId = (req as any).decoded.userId;
     const user = await userService.getUserProfile(userId);
     const userProfile = plainToInstance(UserPresenter, user, { excludeExtraneousValues: true });
     res.status(200).json(userProfile);
