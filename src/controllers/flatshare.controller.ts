@@ -2,10 +2,13 @@ import { plainToInstance } from "class-transformer";
 import { validate } from "class-validator";
 import { NextFunction, Request, Response } from "express";
 import { FlatshareService } from "../services/flatshare.service";
+import { FlatshareRepository } from "../repositories/flatshare.repository";
 import { FlatshareToCreateDTO } from "../types/flatshare/dtos";
 import { FlatsharePresenter } from "../types/flatshare/presenters";
+import { AppError } from "../utils/error.utils";
 
 const flatshareService = new FlatshareService();
+const flatshareRepository = new FlatshareRepository();
 
 export const createFlatshare = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
@@ -46,6 +49,25 @@ export const deleteFlatshare = async (req: Request, res: Response, next: NextFun
         const flatshareId = parseInt(req.params.id, 10);
         await flatshareService.deleteFlatshare(flatshareId);
         res.status(204).send();
+    } catch (error) {
+        next(error);
+    }
+};
+
+export const changeChief = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    try {
+        const flatshareId = parseInt(req.params.id, 10);
+        const flatshare = await flatshareRepository.findById(flatshareId);
+        const newChiefId = req.body.newChiefId;
+        const chiefId = (req as any).decoded.userId;
+
+        if(flatshare?.chief.id !== chiefId) {
+            throw new AppError(403, 'FORBIDDEN', 'You are not allowed to perform this action');
+        }
+
+        const updatedFlatshare = await flatshareService.changeChief(flatshare!, newChiefId);
+        const updatedFlatshareData = plainToInstance(FlatsharePresenter, updatedFlatshare, { excludeExtraneousValues: true });
+        res.status(200).json(updatedFlatshareData);
     } catch (error) {
         next(error);
     }

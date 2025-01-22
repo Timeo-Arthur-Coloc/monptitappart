@@ -40,7 +40,7 @@ export class UserService {
     const savedUser = await this.userRepository.save(createdUser);
 
     // APPELER LE EMAIL SERVICE POUR ENVOYER UNE NOTIFICATION DE CREATION DE COMPTE A L'UTILISATEUR NOUVELLEMENT CRÉÉ
-    await this.emailService.sendAccountCreationEmail(savedUser.email, "Welcome to our platform!", "Your account has been successfully created");
+    await this.emailService.sendEmail(savedUser.email, "Welcome to our platform!", "Your account has been successfully created");
 
     // ON RETOURNE L'UTILISATEUR CRÉÉ
     return savedUser;

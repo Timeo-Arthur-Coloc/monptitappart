@@ -9,7 +9,7 @@ const transporter = nodemailer.createTransport({
 });
 
 export class EmailService {
-  async sendAccountCreationEmail(to: string, subject: string, text: string): Promise<void> {
+  async sendEmail(to: string, subject: string, text: string): Promise<void> {
     const mailOptions = {
       from: 'timeo.avi47@gmail.com',
       to,

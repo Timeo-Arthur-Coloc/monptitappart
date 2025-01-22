@@ -24,10 +24,14 @@ export class FlatshareRepository {
   //   }
 
   findById(id: number): Promise<FlatshareEntity | null> {
-    return this.flatshareDB.findOne({ where: { id } });
+    return this.flatshareDB.findOne({ where: { id }, relations: ["chief"] });
   }
 
   async delete(id: number): Promise<void> {
-    await this.flatshareDB.delete(id);
+    const flatshare = await this.findById(id);
+    if (flatshare) {
+      flatshare.isActive = false;
+      await this.save(flatshare);
+    }
   }
 }

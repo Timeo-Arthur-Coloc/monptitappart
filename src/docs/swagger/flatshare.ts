@@ -75,3 +75,41 @@
  *       404:
  *         description: Flatshare not found
  */
+
+/**
+ * @swagger
+ * /api/flatshares/{id}/change-chief:
+ *   put:
+ *     summary: Change the chief of a flatshare
+ *     tags: [Flatshares]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: integer
+ *         required: true
+ *         description: Flatshare ID
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - newChiefId
+ *             properties:
+ *               newChiefId:
+ *                 type: number
+ *                 description: ID of the new chief
+ *     responses:
+ *       200:
+ *         description: Chief changed successfully
+ *       400:
+ *         description: The new chief is the same as the current chief
+ *       403:
+ *         description: You are not allowed to perform this action
+ *       404:
+ *         description: Flatshare or new chief not found
+ */

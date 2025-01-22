@@ -1,4 +1,4 @@
-import { Column, Entity, ManyToOne, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, JoinTable, ManyToMany, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { UserEntity } from "./user.entity";
 
 @Entity("flatshares")
@@ -13,11 +13,16 @@ export class FlatshareEntity {
     bedrooms: number;
 
     @Column({ length: 50 })
-    agency: string
+    agency: string;
 
-    @ManyToOne(() => UserEntity, (user) => user.flatshares)
+    @ManyToMany(() => UserEntity)
+    @JoinTable()
     roomates: UserEntity[];
 
-    @OneToOne(() => UserEntity, (user) => user.isChiefOf)
+    @ManyToOne(() => UserEntity)
+    @JoinColumn()
     chief: UserEntity;
+
+    @Column({ default: true })
+    isActive: boolean;
 }

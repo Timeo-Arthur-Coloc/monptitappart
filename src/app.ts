@@ -28,7 +28,7 @@ app.get("/", (req, res) => {
 app.use((req: express.Request, res: express.Response, next: express.NextFunction) => {
   const originalSend = res.send.bind(res);
   res.send = (body) => {
-    if (res.statusCode >= 200 && res.statusCode < 400) {
+    if (req.path.startsWith('/api') && res.statusCode >= 200 && res.statusCode < 400) {
       const generalLogPath = path.join(__dirname, '../logs/logs.txt');
       const logMessage = `${new Date().toISOString()} - ${req.method} ${res.statusCode} ${req.originalUrl} - SUCCESS\n`;
       fs.appendFileSync(generalLogPath, logMessage);
@@ -71,30 +71,33 @@ app.use("/api/flatshares", flatshareRoutes); // Routes pour les collocs
 app.use((err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {
   console.log(err);
   const errorLogPath = path.join(__dirname, '../logs/errors.txt');
-  const generalLogPath = path.join(__dirname, '../logs/logs.txt');
 
-  if (err instanceof AppError) {
-    const logMessage = `${err.timestamp} - ${req.method} ${err.statusCode} ${req.path} - ${err.errorCode} - ${err.message}\n`;
-    fs.appendFileSync(errorLogPath, logMessage);
-    res.status(err.statusCode).json({
-      statusCode: err.statusCode,
-      errorCode: err.errorCode,
-      message: err.message,
-      method: req.method,
-      path: req.path,
-      timestamp: err.timestamp,
-    });
+  if (req.path.startsWith('/api')) {
+    if (err instanceof AppError) {
+      const logMessage = `${err.timestamp} - ${req.method} ${err.statusCode} ${req.path} - ${err.errorCode} - ${err.message}\n`;
+      fs.appendFileSync(errorLogPath, logMessage);
+      res.status(err.statusCode).json({
+        statusCode: err.statusCode,
+        errorCode: err.errorCode,
+        message: err.message,
+        method: req.method,
+        path: req.path,
+        timestamp: err.timestamp,
+      });
+    } else {
+      const logMessage = `${new Date().toISOString()} - 500 - INTERNAL_SERVER_ERROR - An unexpected error occurred - ${req.method} - ${req.path}\n`;
+      fs.appendFileSync(errorLogPath, logMessage);
+      res.status(500).json({
+        statusCode: 500,
+        errorCode: "INTERNAL_SERVER_ERROR",
+        message: "An unexpected error occurred",
+        method: req.method,
+        path: req.path,
+        timestamp: new Date().toISOString(),
+      });
+    }
   } else {
-    const logMessage = `500 - INTERNAL_SERVER_ERROR - An unexpected error occurred - ${req.method} - ${req.path}\n`;
-    fs.appendFileSync(generalLogPath, logMessage);
-    res.status(500).json({
-      statusCode: 500,
-      errorCode: "INTERNAL_SERVER_ERROR",
-      message: "An unexpected error occurred",
-      method: req.method,
-      path: req.path,
-      timestamp: new Date().toISOString(),
-    });
+    next(err);
   }
 });
 

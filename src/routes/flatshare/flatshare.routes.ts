@@ -11,5 +11,8 @@ routes.get('/:id', authenticate, flatshareController.getFlatshare);
 
 routes.delete('/:id', authenticate, flatshareController.deleteFlatshare);
 
+// Route to change the chief of a flatshare
+routes.put('/:id/change-chief', authenticate, flatshareController.changeChief);
+
 export default routes;
 

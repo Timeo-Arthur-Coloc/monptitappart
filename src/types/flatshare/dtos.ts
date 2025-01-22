@@ -24,6 +24,5 @@ export class FlatshareToCreateDTO {
 
     @Expose()
     @IsNumber()
-    @Type(() => UserToCreateDTO)
-    chief: FlatshareEntity['chief'];
+    chief: number;
 }
