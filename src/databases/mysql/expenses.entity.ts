@@ -25,5 +25,4 @@ export class ExpensesEntity {
 
     @OneToMany(() => OwingsEntity, (owing) => owing.expense)
     owings: OwingsEntity[];
-
 }
