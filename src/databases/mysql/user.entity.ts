@@ -1,6 +1,8 @@
 import { IsOptional } from "class-validator";
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, ManyToMany, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { FlatshareEntity } from "./flatshare.entity";
+import { ExpensesEntity } from "./expenses.entity";
+import { OwingsEntity } from "./owings.entity";
 
 @Entity("users")
 export class UserEntity {
@@ -30,8 +32,14 @@ export class UserEntity {
   profilePicture: string;
 
   @OneToMany(() => FlatshareEntity, (flatshare) => flatshare.roomates)
-  flatshares: FlatshareEntity[]
+  flatshares: FlatshareEntity[];
 
   @OneToMany(() => FlatshareEntity, (flatshare) => flatshare.chief)
-  isChiefOf: FlatshareEntity[]
+  isChiefOf: FlatshareEntity[];
+
+  @ManyToMany(() => ExpensesEntity, (expense) => expense.payedBy)
+  expenses: ExpensesEntity[];
+
+  @OneToMany(() => OwingsEntity, (owing) => owing.debtor)
+  debts: OwingsEntity[];
 }
