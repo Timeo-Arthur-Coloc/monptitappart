@@ -19,10 +19,13 @@
  *             properties:
  *               surface:
  *                 type: number
+ *                 example: 100
  *               agency:
  *                 type: string
+ *                 example: "Century 21"
  *               bedrooms:
  *                 type: number
+ *                 example: 3
  *               roomates:
  *                 type: array
  *     responses:
@@ -52,6 +55,19 @@
  *         description: Flatshare retrieved successfully
  *       404:
  *         description: Flatshare not found
+ */
+
+/**
+ * @swagger
+ * /api/flatshares:
+ *   get:
+ *     summary: Get all flatshares
+ *     tags: [Flatshares]
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: Flatshares retrieved successfully
  */
 
 /**

@@ -13,6 +13,10 @@ routes.post("/refresh", userController.refreshAccessToken);
 
 routes.get("/me", authenticate, userController.getUserProfile);
 
+routes.get("/", authenticate, userController.getAllUsers);
+
+routes.get("/:id/flatshares", authenticate, userController.getUserFlatshares);
+
 routes.delete("/:id", authenticate, userController.deleteUser);
 
 export default routes;

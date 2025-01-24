@@ -1,4 +1,5 @@
 import { UserEntity } from "../databases/mysql/user.entity";
+import { FlatshareEntity } from "../databases/mysql/flatshare.entity";
 import { UserRepository } from "../repositories/user.repository";
 import { UserToCreateDTO } from "../types/user/dtos";
 import { EmailService } from "../services/email.service";
@@ -76,11 +77,23 @@ export class UserService {
     return user;
   }
 
+  async getAllUsers(): Promise<UserEntity[]> {
+    return this.userRepository.findAll();
+  }
+
   async deleteUser(userId: number): Promise<void> {
     const user = await this.userRepository.findById(userId);
     if (!user) {
       throw new AppError(404, 'USER_NOT_FOUND', 'User not found');
     }
     await this.userRepository.delete(userId);
+  }
+
+  async getUserFlatshares(userId: number): Promise<FlatshareEntity[]> {
+    const user = await this.userRepository.findById(userId);
+    if (!user) {
+      throw new AppError(404, 'USER_NOT_FOUND', 'User not found');
+    }
+    return this.userRepository.findFlatsharesByUserId(userId);
   }
 }

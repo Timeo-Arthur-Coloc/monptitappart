@@ -57,8 +57,10 @@
  *             properties:
  *               email:
  *                 type: string
+ *                 example: "arthur.lagneaux@supdevinci-edu.fr"
  *               password:
  *                 type: string
+ *                 example: "1321216a21xe3a5z4661668a7xeIJO"
  *     responses:
  *       200:
  *         description: User logged in successfully
@@ -102,6 +104,8 @@
  *       bearerFormat: JWT
  */
 
+// ===================================================================== //
+
 /**
  * @swagger
  * /api/users/me:
@@ -115,6 +119,23 @@
  *         description: User profile retrieved successfully
  *       401:
  *         description: Unauthorized
+ */
+
+// ===================================================================== //
+
+/**
+ * @swagger
+ * /api/users:
+ *  get:
+ *   summary: Get all users
+ *   tags: [Users]
+ *   security:
+ *     - bearerAuth: []
+ *   responses:
+ *     200:
+ *       description: Users retrieved successfully
+ *     401:
+ *       description: Unauthorized
  */
 
 // ===================================================================== //
@@ -137,6 +158,32 @@
  *     responses:
  *       204:
  *         description: User deleted successfully
+ *       401:
+ *         description: Unauthorized
+ *       404:
+ *         description: User not found
+ */
+
+// ===================================================================== //
+
+/**
+ * @swagger
+ * /api/users/{id}/flatshares:
+ *   get:
+ *     summary: Get flatshares of a user
+ *     tags: [Users]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: integer
+ *         required: true
+ *         description: User ID
+ *     responses:
+ *       200:
+ *         description: Flatshares retrieved successfully
  *       401:
  *         description: Unauthorized
  *       404:

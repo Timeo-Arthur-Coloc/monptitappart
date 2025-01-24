@@ -4,6 +4,7 @@ import { UserToCreateDTO } from "../types/user/dtos";
 import { plainToInstance } from "class-transformer";
 import { validate } from "class-validator";
 import { UserPresenter } from "../types/user/presenters";
+import { formatResponse } from "../utils/response.utils";
 
 const userService = new UserService();
 
@@ -58,11 +59,31 @@ export const getUserProfile = async (req: Request, res: Response, next: NextFunc
   }
 };
 
+export const getAllUsers = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+  try {
+    const users = await userService.getAllUsers();
+    const usersData = users.map(user => plainToInstance(UserPresenter, user, { excludeExtraneousValues: true }));
+    res.status(200).json(formatResponse(req, usersData));
+  } catch (error) {
+    next(error);
+  }
+}
+
 export const deleteUser = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   try {
     const userId = parseInt(req.params.id, 10);
     await userService.deleteUser(userId);
     res.status(204).send();
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const getUserFlatshares = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+  try {
+    const userId = parseInt(req.params.id, 10);
+    const flatshares = await userService.getUserFlatshares(userId);
+    res.status(200).json(flatshares);
   } catch (error) {
     next(error);
   }

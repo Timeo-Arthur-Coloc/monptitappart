@@ -78,4 +78,8 @@ export class FlatshareService {
 
     return updatedFlatshare;
   }
+
+  async getAllFlatshares(): Promise<FlatshareEntity[]> {
+    return this.flatshareRepository.findAll();
+  }
 }
