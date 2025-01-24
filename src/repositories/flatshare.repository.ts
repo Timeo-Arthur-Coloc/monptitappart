@@ -24,7 +24,7 @@ export class FlatshareRepository {
   //   }
 
   findById(id: number): Promise<FlatshareEntity | null> {
-    return this.flatshareDB.findOne({ where: { id }, relations: ["chief", "roomates"] });
+    return this.flatshareDB.findOne({ where: { id }, relations: ["chief", "roommates"] });
   }
 
   findAll(): Promise<FlatshareEntity[]> {

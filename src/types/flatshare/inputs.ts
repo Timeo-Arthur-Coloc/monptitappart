@@ -20,5 +20,5 @@ export class FlatshareToCreateInput {
     @IsOptional()
     @IsArray()
     @Type(() => UserToCreateDTO)
-    roomates: FlatshareEntity['roomates'];
+    roommates: FlatshareEntity['roommates'];
 }

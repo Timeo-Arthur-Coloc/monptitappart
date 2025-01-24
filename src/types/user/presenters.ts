@@ -1,6 +1,7 @@
-import { Expose } from "class-transformer";
-import { IsNumber, IsOptional, IsString } from "class-validator";
+import { Expose, Type } from "class-transformer";
+import { IsNumber, IsOptional, IsString, IsArray } from "class-validator";
 import { UserEntity } from "../../databases/mysql/user.entity";
+import { FlatshareEntity } from "../../databases/mysql/flatshare.entity";
 
 export class UserPresenter {
   @Expose()
@@ -30,4 +31,9 @@ export class UserPresenter {
 
   @Expose()
   isActive: boolean;
+
+  @Expose()
+  @IsArray()
+  @Type(() => FlatshareEntity)
+  flatshares: FlatshareEntity[];
 }

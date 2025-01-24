@@ -26,7 +26,7 @@
  *               bedrooms:
  *                 type: number
  *                 example: 3
- *               roomates:
+ *               roommates:
  *                 type: array
  *     responses:
  *       201:

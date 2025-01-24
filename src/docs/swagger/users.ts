@@ -4,6 +4,7 @@
  *   post:
  *     summary: Register a new user
  *     tags: [Users]
+ *     description: Creates a new user account with the provided information.
  *     requestBody:
  *       required: true
  *       content:
@@ -19,26 +20,41 @@
  *             properties:
  *               firstname:
  *                 type: string
+ *                 description: User's first name
+ *                 example: "John"
  *               lastname:
  *                 type: string
+ *                 description: User's last name
+ *                 example: "Doe"
  *               birthdate:
  *                 type: string
  *                 format: date
+ *                 description: User's date of birth in YYYY-MM-DD format
+ *                 example: "1990-01-15"
  *               email:
  *                 type: string
+ *                 format: email
+ *                 description: User's email address
+ *                 example: "john.doe@example.com"
  *               password:
  *                 type: string
+ *                 format: password
+ *                 description: User's password (minimum 8 characters)
+ *                 example: "Password@123"
  *               profilePicture:
  *                 type: string
- *                 description: "Optional URL of the user's profile picture PD"
+ *                 format: uri
+ *                 description: Optional URL of the user's profile picture
+ *                 example: "https://example.com/profiles/john_doe.png"
  *     responses:
  *       201:
  *         description: User created successfully
  *       400:
- *         description: Invalid input
+ *         description: Invalid input - missing or invalid fields
  *       409:
  *         description: User already exists
  */
+
 
 // ===================================================================== //
 

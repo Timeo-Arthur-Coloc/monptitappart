@@ -38,7 +38,8 @@ export class UserRepository {
 
   findFlatsharesByUserId(userId: number): Promise<FlatshareEntity[]> {
     return this.userDB.createQueryBuilder("user")
-      .leftJoinAndSelect("user.flatshares", "flatshare")
+      .leftJoinAndSelect("user.roommates", "roommate")
+      .leftJoinAndSelect("roommate.flatshare", "flatshare")
       .where("user.id = :userId", { userId })
       .getRawMany();
   }

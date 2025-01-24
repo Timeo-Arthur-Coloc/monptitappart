@@ -20,7 +20,7 @@ export class FlatshareToCreateDTO {
     @IsOptional()
     @IsArray()
     @Type(() => UserToCreateDTO)
-    roomates: FlatshareEntity['roomates'];
+    roommates: FlatshareEntity['roommates'];
 
     @Expose()
     @IsNumber()

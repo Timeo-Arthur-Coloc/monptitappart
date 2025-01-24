@@ -15,9 +15,9 @@ export class FlatshareEntity {
     @Column({ length: 50 })
     agency: string;
 
-    @ManyToMany(() => UserEntity)
+    @ManyToMany(() => UserEntity, user => user.flatshares)
     @JoinTable()
-    roomates: UserEntity[];
+    roommates: UserEntity[];
 
     @ManyToOne(() => UserEntity)
     @JoinColumn()

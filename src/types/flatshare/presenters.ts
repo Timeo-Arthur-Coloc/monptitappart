@@ -23,7 +23,7 @@ export class FlatsharePresenter {
     @IsArray()
     @IsOptional()
     @Type(() => FlatsharePresenter)
-    roomates: FlatshareEntity['roomates'];
+    roommates: FlatshareEntity['roommates'];
 
     @Expose()
     @Type(() => FlatsharePresenter)

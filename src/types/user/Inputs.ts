@@ -1,6 +1,7 @@
 import { Expose } from "class-transformer";
-import { IsOptional, IsString } from "class-validator";
+import { IsOptional, IsString, IsArray } from "class-validator";
 import { UserEntity } from "../../databases/mysql/user.entity";
+import { FlatshareEntity } from "../../databases/mysql/flatshare.entity";
 
 export class userToCreateInput {
   @Expose()
@@ -27,4 +28,9 @@ export class userToCreateInput {
   @IsString()
   @IsOptional()
   profilePicture: UserEntity['profilePicture'];
+
+  @Expose()
+  @IsArray()
+  @IsOptional()
+  flatshares: FlatshareEntity[];
 }

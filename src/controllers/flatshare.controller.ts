@@ -25,7 +25,7 @@ export const createFlatshare = async (req: Request, res: Response, next: NextFun
             throw new Error("User not found");
         }
 
-        flatshareToCreateDTO.roomates = [user];
+        flatshareToCreateDTO.roommates = [user];
 
         const dtoErrors = await validate(flatshareToCreateDTO);
         if (dtoErrors.length > 0) {
